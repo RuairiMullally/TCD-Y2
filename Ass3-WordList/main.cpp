@@ -1,4 +1,5 @@
 #include "UnsortedWordList.h"
+#include "Node.h"
 int main() {
     UnsortedWordList list;
     list.CountWord("Ultimate");

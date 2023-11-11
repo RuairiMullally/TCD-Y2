@@ -1,6 +1,10 @@
 #ifndef A05_UNSORTEDWORDLIST_H
 #define A05_UNSORTEDWORDLIST_H
 #include "Node.h"
+#include <iostream>
+#include <string>
+
+using namespace std;   
 
 class UnsortedWordList {
 public:
