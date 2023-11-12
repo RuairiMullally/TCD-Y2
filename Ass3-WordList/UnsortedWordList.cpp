@@ -1,7 +1,5 @@
+//Ruairi Mullally 22336002
 #include "UnsortedWordList.h"
-
-
-
 
 
 UnsortedWordList::UnsortedWordList(){
