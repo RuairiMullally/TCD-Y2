@@ -78,19 +78,19 @@ string UnsortedWordList::MaxWord() const{
 
 int UnsortedWordList::MaxCount() const{
     Node *current = first;
-    Node *max = first;
+    Node *maxi = first;
 
     if(current == nullptr){
         return 0;
     }
 
     while(current != nullptr){
-        if(current->count > max->count){
-            max = current;
+        if(current->count > maxi->count){
+            maxi = current;
         }
         current = current->link;
     }
-    return(max->count);
+    return(maxi->count);
 }
 
 void UnsortedWordList::Print() const{
@@ -137,6 +137,7 @@ void UnsortedWordList::InsertFirst(string word){
         }
     }
 }
+
 void UnsortedWordList::DeleteAll(){
     Node* currentnode = first;
     Node* nextnode;
@@ -148,39 +149,35 @@ void UnsortedWordList::DeleteAll(){
     length =0;
     first = nullptr;
     last = nullptr;
-
 }
+
 void UnsortedWordList::DeleteWord(string word){
     Node *current = FindWord(word);
-    if(current != nullptr && current == first && first == last){
+    if(current != nullptr && current == first && first == last){//if node is first and only node
         length--;
         first = nullptr;
         last = nullptr;
         delete current;
-    }else if(current != nullptr && current == first){
+    }else if(current != nullptr && current == first){//if node is first in list
         first = first->link;
         length--;
         delete current;
-    }else if(current != nullptr){
+    }else if(current != nullptr){//if node is somewhere else
         Node *previous = nullptr;
         current = first;
         while(current != nullptr && current->word != word){
             previous = current;
             current = current->link;
         }
-        if(current == nullptr){
+        if(current == last){//if node is last in list
             previous->link = nullptr;
-            last = nullptr;
+            last = previous;
             delete current;
             length--;
-        }else{
+        }else{//if node is somewhere in the middle of list
             previous->link = current->link;
             length--;
             delete current;
         }
-
     }
 }
-
-
-
