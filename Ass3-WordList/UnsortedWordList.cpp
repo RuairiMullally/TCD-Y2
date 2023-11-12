@@ -12,7 +12,7 @@ UnsortedWordList::UnsortedWordList(){
 }
 
 UnsortedWordList::~UnsortedWordList(){
-
+    DeleteAll();
 }
 
 bool UnsortedWordList::IsEmpty() const{
@@ -54,26 +54,26 @@ Node *UnsortedWordList::FindWord(string word){
 
 string UnsortedWordList::MaxWord() const{
     Node *current = first;
-    Node *max = first;
+    Node *maxi = first;
 
     if(current == nullptr){
         return "undefined";
     }
 
     while(current != nullptr){
-        if(current->count > max->count){
-            max = current;
+        if(current->count > maxi->count){
+            maxi = current;
         }
         current = current->link;
     }
     current = first;
     while(current != nullptr){
-        if(current->count == max->count && current->word != max->word){
+        if((current->count == maxi->count) && (current->word != maxi->word)){
             return "undefined";
         }
         current = current->link;
     }
-    return(max->word);
+    return(maxi->word);
 }
 
 int UnsortedWordList::MaxCount() const{
@@ -124,11 +124,63 @@ void UnsortedWordList::CountWord(string word){
 }
 
 void UnsortedWordList::InsertFirst(string word){
-
+    Node *current = FindWord(word);
+    if(current != nullptr){
+        current->count++;
+    }else{
+        Node* node = new Node(word, 1);
+        length++;
+        node->link = first;
+        first = node;
+        if(last == nullptr){
+            last = first;
+        }
+    }
 }
 void UnsortedWordList::DeleteAll(){
+    Node* currentnode = first;
+    Node* nextnode;
+    while (currentnode != nullptr){
+        nextnode = currentnode->link;
+        delete currentnode;
+        currentnode=nextnode;
+    }
+    length =0;
+    first = nullptr;
+    last = nullptr;
 
 }
 void UnsortedWordList::DeleteWord(string word){
+    Node *current = FindWord(word);
+    if(current != nullptr && current == first && first == last){
+        length--;
+        first = nullptr;
+        last = nullptr;
+        delete current;
+    }else if(current != nullptr && current == first){
+        first = first->link;
+        length--;
+        delete current;
+    }else if(current != nullptr){
+        Node *previous = nullptr;
+        current = first;
+        while(current != nullptr && current->word != word){
+            previous = current;
+            current = current->link;
+        }
+        if(current == nullptr){
+            previous->link = nullptr;
+            last = nullptr;
+            delete current;
+            length--;
+        }else{
+            previous->link = current->link;
+            length--;
+            delete current;
+        }
 
+    }
 }
+
+
+
