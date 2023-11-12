@@ -12,7 +12,7 @@ UnsortedWordList::UnsortedWordList(){
 }
 
 UnsortedWordList::~UnsortedWordList(){
-    
+
 }
 
 bool UnsortedWordList::IsEmpty() const{
@@ -46,7 +46,7 @@ bool UnsortedWordList::Contains(string word){
 Node *UnsortedWordList::FindWord(string word){
     Node *current = first;
 
-    while((current->word != word) && (current != nullptr)){
+    while((current != nullptr) && (current->word != word)){
         current = current->link;
     }
     return current;
@@ -90,34 +90,37 @@ int UnsortedWordList::MaxCount() const{
         }
         current = current->link;
     }
-    return(max->count);  
+    return(max->count);
 }
 
 void UnsortedWordList::Print() const{
-    Node *current = Front();
+    Node *current = first;
     cout << "WordList(" << endl;
-    cout << "length=" << length;
+    cout << "length=" << length << endl;
     while(current != nullptr){
-        cout << "Word(" << current->word << "," << current->count << ")" << endl;   
+        cout << "Word(" << current->word << "," << current->count << ")" << endl;
+        current = current->link;
     }
     cout << ")" << endl;
 }
 
 void UnsortedWordList::CountWord(string word){
     Node *current = FindWord(word);
-    
-    if(first == nullptr){
-        first = new Node(word, 1);
-        last = first;
-        length++; 
-    }
-    else if(current != nullptr){
+
+    if(current != nullptr){
         current->count++;
     }else{
         Node* node = new Node(word, 1);
-        last->link = node;
         length++;
-    } 
+
+        if(first == nullptr){
+            first = node;
+            last = node;
+        }else{
+            last->link = node;
+            last = node;
+        }
+    }
 }
 
 void UnsortedWordList::InsertFirst(string word){

@@ -11,4 +11,6 @@ int main() {
     list.CountWord("Everything");
     list.CountWord("Question");
     list.Print();
+
+    return 0;
 }
